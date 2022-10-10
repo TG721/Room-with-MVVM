@@ -2,15 +2,14 @@ package com.example.roomwithmvvm.ui.element
 
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.roomwithmvvm.data.local.source.User
 import com.example.roomwithmvvm.databinding.FragmentEditBinding
 import com.example.roomwithmvvm.ui.element.common.BaseFragment
-import com.example.roomwithmvvm.ui.viewmodel.AddViewModel
 import com.example.roomwithmvvm.ui.viewmodel.EditViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.properties.Delegates
 
 @AndroidEntryPoint
 class EditFragment :  BaseFragment<FragmentEditBinding>(
@@ -18,11 +17,21 @@ class EditFragment :  BaseFragment<FragmentEditBinding>(
 ) {
     private val viewModel: EditViewModel by viewModels()
     private val args by navArgs<EditFragmentArgs>()
+    private var currUserID by Delegates.notNull<Int>()
+    private lateinit var currUserFirstName : String
+    private lateinit var currUserLastName : String
+    private var currUserAge by Delegates.notNull<Int>()
+
     override fun setup() {
-    binding.apply {
-        editTextTextFirstName.setText(args.currentUser.firstName)
-        editTextTextLastName.setText(args.currentUser.lastname)
-        editTextAge.setText(args.currentUser.age.toString())
+         currUserID = args.currentUser.id!!
+         currUserFirstName= args.currentUser.firstName
+         currUserLastName = args.currentUser.lastname
+         currUserAge = args.currentUser.age
+
+        binding.apply {
+        editTextTextFirstName.setText(currUserFirstName)
+        editTextTextLastName.setText(currUserLastName)
+        editTextAge.setText(currUserAge.toString())
     }
     }
 
@@ -40,6 +49,10 @@ class EditFragment :  BaseFragment<FragmentEditBinding>(
                 else {
                     Toast.makeText(requireContext(), "Fill all fields", Toast.LENGTH_SHORT).show()
                 }
+            }
+            buttonDelete.setOnClickListener {
+                viewModel.deleteUser(User(args.currentUser.id,currUserFirstName,currUserLastName,currUserAge))
+                goToListFragment()
             }
         }
     }

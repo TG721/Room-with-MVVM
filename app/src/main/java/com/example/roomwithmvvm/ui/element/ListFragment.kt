@@ -5,14 +5,14 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.roomwithmvvm.databinding.FragmentListBinding
 import com.example.roomwithmvvm.ui.element.adapter.UserAdapter
 import com.example.roomwithmvvm.ui.element.common.BaseFragment
 import com.example.roomwithmvvm.ui.viewmodel.ListViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -29,6 +29,7 @@ class ListFragment :  BaseFragment<FragmentListBinding>(
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         viewModel.getAllUsers()
+
     }
 
     override fun observers() {

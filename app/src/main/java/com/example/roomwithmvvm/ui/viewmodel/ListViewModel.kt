@@ -3,6 +3,7 @@ package com.example.roomwithmvvm.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.roomwithmvvm.data.local.source.User
+import com.example.roomwithmvvm.domain.usecase.DeleteUserUseCase
 import com.example.roomwithmvvm.domain.usecase.GetAllUsersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -20,5 +21,6 @@ class ListViewModel @Inject constructor(private val getAllUsersUseCase: GetAllUs
 
         }
     }
+
 
 }

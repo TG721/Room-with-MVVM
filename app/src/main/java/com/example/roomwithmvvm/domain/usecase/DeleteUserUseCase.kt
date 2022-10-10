@@ -5,7 +5,7 @@ import com.example.roomwithmvvm.data.local.source.User
 import com.example.roomwithmvvm.domain.repository.UserRepository
 import javax.inject.Inject
 
-class DeleteUseUseCase @Inject constructor(
+class DeleteUserUseCase @Inject constructor(
     private val userRep: UserRepository
 ) {
     suspend fun deleteUser(user: User){

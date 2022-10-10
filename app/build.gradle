@@ -82,6 +82,8 @@ dependencies {
     kapt "androidx.room:room-compiler:$roomVer"
     implementation "androidx.room:room-ktx:$roomVer"
     androidTestImplementation "androidx.room:room-testing:$roomVer"
+
+
 }
 
 kapt {
