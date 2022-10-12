@@ -83,6 +83,9 @@ dependencies {
     implementation "androidx.room:room-ktx:$roomVer"
     androidTestImplementation "androidx.room:room-testing:$roomVer"
 
+    //Swipe Decorator
+    implementation 'com.github.xabaras:RecyclerViewSwipeDecorator:1.4'
+
 
 }
 
