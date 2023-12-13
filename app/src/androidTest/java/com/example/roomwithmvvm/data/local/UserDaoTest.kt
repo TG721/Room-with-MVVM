@@ -8,6 +8,8 @@ import com.example.roomwithmvvm.data.local.source.User
 import com.example.roomwithmvvm.data.local.source.UserDao
 import com.example.roomwithmvvm.data.local.source.UserDatabase
 import com.google.common.truth.Truth.assertThat
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -15,23 +17,25 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import javax.inject.Inject
+import javax.inject.Named
 
-@RunWith(AndroidJUnit4::class) // to make sure that all these tests inside class will run on emulator (instrumented tests)
+//@RunWith(AndroidJUnit4::class) removed because we specify our own HiltTestRunner
 @SmallTest
+@HiltAndroidTest
 class UserDaoTest {
 
-    private lateinit var database: UserDatabase
+    @get:Rule
+    var hiltRule= HiltAndroidRule(this)
+
+    @Inject
+    @Named("test_db")
+    lateinit var database: UserDatabase //removed private modifier because we can't inject into private variables (unless they are in constructor)
     private lateinit var dao: UserDao
 
     @Before
     fun setup() {
-        database = Room.inMemoryDatabaseBuilder(
-            ApplicationProvider.getApplicationContext(),
-            UserDatabase::class.java
-        )
-            .allowMainThreadQueries() //we allow access to database from main thread (all actions are executed on e after another)
-            .build()
-        //multithreading would cause dependent test cases (threads would manipulate each other)
+        hiltRule.inject() //this inject command will make hilt inject all dependencies in this class with @Inject annotation
         dao = database.userDao()
     }
 
